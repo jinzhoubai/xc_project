@@ -7,6 +7,7 @@ import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_course.dao.CourseBaseRepository;
+import com.xuecheng.manage_course.dao.CourseMapper;
 import com.xuecheng.manage_course.dao.TeachplanMapper;
 import com.xuecheng.manage_course.dao.TeachplanRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -95,5 +96,33 @@ public class CourseService {
         //返回根结点的id
         return teachplanList.get(0).getId();
     }
+
+    public CourseBase getCourseBaseById(String courseid){
+        Optional<CourseBase> optional=courseBaseRepository.findById(courseid);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+
+
+    public ResponseResult updateCourseBase(String courseId,CourseBase courseBase){
+        CourseBase courseBase1=this.getCourseBaseById(courseId);
+        if(courseBase1==null){
+            ExceptionCast.cast(CommonCode.INVALID_PARAM);
+        }
+        courseBase1.setName(courseBase.getName());
+        courseBase1.setMt(courseBase.getMt());
+        courseBase1.setSt(courseBase.getSt());
+        courseBase1.setGrade(courseBase.getGrade());
+        courseBase1.setStudymodel(courseBase.getStudymodel());
+        courseBase1.setUsers(courseBase.getUsers());
+        courseBase1.setDescription(courseBase.getDescription());
+
+        CourseBase save=courseBaseRepository.save(courseBase1);
+        return new ResponseResult(CommonCode.SUCCESS);
+    }
+
+
 
 }
