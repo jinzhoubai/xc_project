@@ -2,8 +2,10 @@ package com.xuecheng.manage_course.controller;
 
 import com.xuecheng.api.course.CourseControllerApi;
 import com.xuecheng.framework.domain.course.CourseBase;
+import com.xuecheng.framework.domain.course.CourseMarket;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
+import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_course.service.CourseService;
 import io.swagger.annotations.ApiOperation;
@@ -40,5 +42,22 @@ public class CourseController implements CourseControllerApi {
     @PutMapping("/coursebase/update/{id}")
     public ResponseResult updateCourseBase(@PathVariable("id") String courseId, @RequestBody CourseBase courseBase) {
         return courseService.updateCourseBase(courseId,courseBase);
+    }
+
+    @Override
+    @GetMapping("/coursemarket/get/{courseId}")
+    public CourseMarket findCourseMarketById(@PathVariable("courseId")String courseId) {
+        return  courseService.getCourseMarketById(courseId);
+    }
+
+    @Override
+    @PostMapping("/coursemarket/update/{id}")
+    public ResponseResult updateCourseMarket(@PathVariable("id")String couresId, @RequestBody CourseMarket courseMarket) {
+        CourseMarket courseMarket_u = courseService.updateCourseMarket(couresId, courseMarket);
+        if(courseMarket_u!=null){
+            return new ResponseResult(CommonCode.SUCCESS);
+        }else{
+            return new ResponseResult(CommonCode.FAIL);
+        }
     }
 }

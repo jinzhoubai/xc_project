@@ -1,15 +1,13 @@
 package com.xuecheng.manage_course.service;
 
 import com.xuecheng.framework.domain.course.CourseBase;
+import com.xuecheng.framework.domain.course.CourseMarket;
 import com.xuecheng.framework.domain.course.Teachplan;
 import com.xuecheng.framework.domain.course.ext.TeachplanNode;
 import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.ResponseResult;
-import com.xuecheng.manage_course.dao.CourseBaseRepository;
-import com.xuecheng.manage_course.dao.CourseMapper;
-import com.xuecheng.manage_course.dao.TeachplanMapper;
-import com.xuecheng.manage_course.dao.TeachplanRepository;
+import com.xuecheng.manage_course.dao.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,9 @@ public class CourseService {
 
     @Autowired
     CourseBaseRepository courseBaseRepository;
+
+    @Autowired
+    CourseMarketRepository courseMarketRepository;
 
     //查询课程计划
     public TeachplanNode findTeachplanList(String courseId){
@@ -106,6 +107,7 @@ public class CourseService {
     }
 
 
+    @Transactional
     public ResponseResult updateCourseBase(String courseId,CourseBase courseBase){
         CourseBase courseBase1=this.getCourseBaseById(courseId);
         if(courseBase1==null){
@@ -121,6 +123,38 @@ public class CourseService {
 
         CourseBase save=courseBaseRepository.save(courseBase1);
         return new ResponseResult(CommonCode.SUCCESS);
+    }
+    public CourseMarket getCourseMarketById(String courseid){
+        Optional<CourseMarket> optional=courseMarketRepository.findById(courseid);
+        if(optional.isPresent()){
+            return optional.get();
+        }
+        return null;
+    }
+
+    @Transactional
+    public CourseMarket updateCourseMarket(String id,CourseMarket courseMarket){
+        CourseMarket one=this.getCourseMarketById(id);
+        if(one==null){
+            //添加课程营销信息
+            one = new CourseMarket();
+            BeanUtils.copyProperties(courseMarket, one);
+            //设置课程 id
+            one.setId(id);
+            courseMarketRepository.save(one);
+        }else{
+            one.setCharge(courseMarket.getCharge());
+            one.setStartTime(courseMarket.getStartTime());
+            //课程有效期，开始时间
+            one.setEndTime(courseMarket.getEndTime());
+            // 课程有效期，结束时间
+            one.setPrice(courseMarket.getPrice());
+            one.setQq(courseMarket.getQq());
+            one.setValid(courseMarket.getValid());
+            courseMarketRepository.save(one);
+        }
+        return one;
+
     }
 
 
