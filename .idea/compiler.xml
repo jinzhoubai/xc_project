@@ -9,13 +9,19 @@
         <outputRelativeToContentRoot value="true" />
         <module name="xc-framework-common" />
         <module name="xc-framework-model" />
+        <module name="testFastDFS" />
+        <module name="Test_RabbitMQ_Producer" />
         <module name="xc-framework-utils" />
         <module name="xc-service-api" />
         <module name="xc-service-manage-course" />
         <module name="xc-service-manage-cms" />
+        <module name="Test_RabbitMQ_Cousumer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Test_RabbitMQ_Cousumer" target="1.8" />
+      <module name="Test_RabbitMQ_Producer" target="1.8" />
+      <module name="testFastDFS" target="1.8" />
       <module name="xc-framework-common" target="1.8" />
       <module name="xc-framework-model" target="1.8" />
       <module name="xc-framework-parent" target="1.8" />
@@ -27,6 +33,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Test_RabbitMQ_Cousumer" options="-parameters" />
+      <module name="Test_RabbitMQ_Producer" options="-parameters" />
+      <module name="testFastDFS" options="-parameters" />
       <module name="xc-framework-common" options="-parameters" />
       <module name="xc-framework-model" options="-parameters" />
       <module name="xc-framework-utils" options="-parameters" />
