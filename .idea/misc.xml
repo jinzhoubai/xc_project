@@ -16,6 +16,7 @@
         <option value="$PROJECT_DIR$/Test_RabbitMQ_Producer/pom.xml" />
         <option value="$PROJECT_DIR$/Test_RabbitMQ_Cousumer/pom.xml" />
         <option value="$PROJECT_DIR$/testFastDFS/pom.xml" />
+        <option value="$PROJECT_DIR$/xc-service-base-filesystem/pom.xml" />
       </list>
     </option>
   </component>
